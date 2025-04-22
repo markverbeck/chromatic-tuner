@@ -1,0 +1,47 @@
+<div class="tuner-container">
+  <h1 class="tuner-title">Chromatic Tuner</h1>
+
+  <div class="display-area">
+    <div class="note-display">
+      <span class="playing-note">{{ playingNote || '--' }}</span>
+      <sup *ngIf="centsOff !== 0" class="cents-off" [class.sharp]="centsOff > 0" [class.flat]="centsOff < 0">
+        {{ centsOff > 0 ? '+' : '' }}{{ centsOff }}
+      </sup>
+    </div>
+    <div class="frequency-display">
+      {{ frequency > 0 ? frequency.toFixed(2) : '--.--' }} Hz
+    </div>
+    <div class="target-frequency-display">
+      Target: {{ !isValueNaN(midiNoteNumber) ? getPitchFrequencyFromNote(midiNoteNumber) : '----' }} Hz
+    </div>
+  </div>
+
+  <div class="tuning-meter">
+    <div class="meter-scale">
+      <span class="scale-mark">-50</span>
+      <span class="scale-mark">-25</span>
+      <span class="scale-mark">0</span>
+      <span class="scale-mark">+25</span>
+      <span class="scale-mark">+50</span>
+    </div>
+    <input
+      type="range"
+      id="levelRange"
+      name="level"
+      min="0"
+      max="100"
+      step="1"
+      [value]="tuningValue"
+      class="tuning-slider"
+      disabled
+    />
+    <div class="indicator" [style.left.%]="tuningValue"></div>
+  </div>
+
+  <button class="mic-button" (click)="microphoneOn()">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="mic-icon">
+      <path fill-rule="evenodd" d="M12 14a2 2 0 002-2V8a2 2 0 00-2-2 2 2 0 00-2 2v4a2 2 0 002 2zm-5.66-4.21a9.055 9.055 0 0111.32 0 1.5 1.5 0 012.02 1.72A12.055 12.055 0 0021.95 12a1.5 1.5 0 01-1.5 1.5c-1.124 0-2.21-.19-3.26-.55a9.055 9.055 0 01-11.32 0 1.5 1.5 0 01-2.02-1.72A12.055 12.055 0 002.05 12a1.5 1.5 0 011.5-1.5c1.124 0 2.21.19 3.26.55z" clip-rule="evenodd" />
+    </svg>
+    Start Tuner
+  </button>
+</div>
